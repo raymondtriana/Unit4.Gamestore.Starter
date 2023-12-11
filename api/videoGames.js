@@ -46,7 +46,15 @@ router.post("/", async (req, res, next) => {
 
 // PUT - /api/video-games/:id - update a single video game by id
 router.put("/:id", async (req, res, next) => {
-  // LOGIC GOES HERE
+  try {
+    const id = req.params.id;
+    const request = req.body;
+    const result = await updateVideoGame(id,request);
+    res.send(result)
+  } catch (error) {
+    console.log(error);
+    res.send("ERROR");
+  }
 });
 
 // DELETE - /api/video-games/:id - delete a single video game by id
