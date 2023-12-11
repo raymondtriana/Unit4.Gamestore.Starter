@@ -33,7 +33,18 @@ async function getVideoGameById(id) {
 
 // POST - /api/video-games - create a new video game
 async function createVideoGame(body) {
-  // LOGIC GOES HERE
+    const { name, description, price, inStock, isPopular, imgUrl } = body;
+    try {
+        const { rows: [videoGame] } = await client.query(`
+
+            INSERT INTO videogames(name, description, price, "inStock", "isPopular", "imgUrl")
+            VALUES($1, $2, $3, $4, $5, $6)
+            RETURNING *;
+        `, [name, description, price, inStock, isPopular, imgUrl]);
+        return videoGame;
+    } catch (error) {
+        throw error;
+    }
 }
 
 // PUT - /api/video-games/:id - update a single video game by id
